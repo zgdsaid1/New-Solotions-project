@@ -12,7 +12,13 @@ const app = express()
 const PORT = process.env.PORT || 4000
 
 // Middleware
-app.use(cors())
+app.use(cors({
+  origin: [
+    /^https:\/\/.*\.app\.github\.dev$/,
+    'http://localhost:5173'
+  ],
+  credentials: true
+}))
 app.use(express.json())
 
 // Routes
@@ -20,7 +26,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 
 // Basic route
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.json({ 
     message: 'AI Solutions Hub API',
     version: '1.0.0',
@@ -33,34 +39,18 @@ app.get('/', (req, res) => {
 })
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() })
 })
 
 // Connect to MongoDB
-const connectDB = async () => {
-  try {
-    if (!process.env.MONGODB_URI) {
-      console.warn('MONGODB_URI not found in environment variables')
-      return
-    }
-    
-    await mongoose.connect(process.env.MONGODB_URI)
-    console.log('✅ Connected to MongoDB Atlas')
-  } catch (error) {
-    console.error('❌ MongoDB connection error:', error)
-    process.exit(1)
-  }
-}
+mongoose.connect(process.env.MONGO_URI as string)
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 // Start server
-const startServer = async () => {
-  await connectDB()
-  
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`)
-    console.log(`📡 API available at http://localhost:${PORT}`)
-  })
-}
-
-startServer().catch(console.error)
+app.listen(Number(PORT), '0.0.0.0', () => {
+  console.log(`🚀 Server running on port ${PORT}`)
+  console.log(`📡 API available at http://0.0.0.0:${PORT}`)
+  console.log('💾 Using MongoDB for data storage')
+})

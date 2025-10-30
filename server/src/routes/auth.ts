@@ -99,7 +99,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
 })
 
 // Get current user (protected route)
-router.get('/me', async (req: Request, res: Response): Promise<void> => {
+router.get('/me', async (_req: Request, res: Response): Promise<void> => {
   try {
     // This would need auth middleware in real implementation
     res.json({ message: 'This endpoint requires authentication middleware' })
