@@ -1,7 +1,6 @@
-import jwt, { SignOptions } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-key'
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d'
 
 export interface JwtPayload {
   userId: string
@@ -9,8 +8,9 @@ export interface JwtPayload {
 }
 
 export const generateToken = (payload: JwtPayload): string => {
-  const options: SignOptions = { expiresIn: JWT_EXPIRES_IN as string }
-  return jwt.sign(payload, JWT_SECRET, options)
+  const expiresIn = process.env.JWT_EXPIRES_IN || '7d'
+  // @ts-ignore - expiresIn type compatibility issue
+  return jwt.sign(payload, JWT_SECRET, { expiresIn })
 }
 
 export const verifyToken = (token: string): JwtPayload => {
