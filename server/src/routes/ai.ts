@@ -8,10 +8,10 @@ router.post('/', async (req, res) => {
   try {
     const { prompt } = req.body;
 
-    if (!prompt) {
+    if (!prompt || typeof prompt !== 'string' || prompt.trim().length === 0) {
       return res.status(400).json({
         success: false,
-        error: 'Prompt is required'
+        error: 'Prompt is required and must be a non-empty string'
       });
     }
 

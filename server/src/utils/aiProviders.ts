@@ -2,6 +2,13 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import OpenAI from 'openai';
 import axios from 'axios';
 
+// Configuration constants
+const GEMINI_MODEL = 'gemini-pro';
+const DEEPSEEK_MODEL = 'deepseek-chat';
+const OPENAI_MODEL = 'gpt-3.5-turbo';
+const API_TIMEOUT_MS = 10000;
+const MAX_TOKENS = 500;
+
 export interface AIResponse {
   success: boolean;
   provider: string;
@@ -25,7 +32,7 @@ export async function callGemini(prompt: string): Promise<AIResponse> {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
     
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -64,7 +71,7 @@ export async function callDeepSeek(prompt: string): Promise<AIResponse> {
     const response = await axios.post(
       'https://api.deepseek.com/v1/chat/completions',
       {
-        model: 'deepseek-chat',
+        model: DEEPSEEK_MODEL,
         messages: [
           {
             role: 'user',
@@ -77,7 +84,7 @@ export async function callDeepSeek(prompt: string): Promise<AIResponse> {
           'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json'
         },
-        timeout: 10000
+        timeout: API_TIMEOUT_MS
       }
     );
 
@@ -115,14 +122,14 @@ export async function callOpenAI(prompt: string): Promise<AIResponse> {
     const openai = new OpenAI({ apiKey });
     
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: OPENAI_MODEL,
       messages: [
         {
           role: "user",
           content: prompt
         }
       ],
-      max_tokens: 500
+      max_tokens: MAX_TOKENS
     });
 
     const text = completion.choices[0].message.content || '';
