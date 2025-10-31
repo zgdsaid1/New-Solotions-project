@@ -4,6 +4,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import authRoutes from './routes/auth.js'
 import userRoutes from './routes/user.js'
+import aiRoutes from './routes/ai.js'
 
 // Load environment variables
 dotenv.config()
@@ -24,6 +25,7 @@ app.use(express.json())
 // Routes
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/ai', aiRoutes)
 
 // Basic route
 app.get('/', (_req, res) => {
@@ -33,6 +35,7 @@ app.get('/', (_req, res) => {
     endpoints: {
       auth: '/api/auth',
       user: '/api/user',
+      ai: '/api/ai',
       health: '/health'
     }
   })
