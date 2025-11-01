@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ChatSession, IChatSession, IMessage } from './chatSession.model.js';
+// import { ChatSession } from './chatSession.model.js';
 
 /**
  * Start a new chat session for a user

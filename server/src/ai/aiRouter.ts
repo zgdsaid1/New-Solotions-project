@@ -3,16 +3,41 @@ import { AIModelProvider } from "./routing.js";
 import { GeminiProvider } from "./providers/GeminiProvider.js";
 import { DeepSeekProvider } from "./providers/DeepSeekProvider.js";
 import { OpenAIProvider } from "./providers/OpenAIProvider.js";
+import { MockProvider } from "./providers/MockProvider.js";
 
 const router = express.Router();
 
 async function generateResponse(prompt: string): Promise<string> {
   // Initialize providers in fallback order
-  const providers: AIModelProvider[] = [
-    new DeepSeekProvider(),   // Primary (fast + free)
-    new GeminiProvider(),     // Secondary fallback
-    new OpenAIProvider(),     // Last fallback
-  ];
+  const providers: AIModelProvider[] = [];
+  
+  // Try to add real providers if API keys are available
+  try {
+    if (process.env.DEEPSEEK_API_KEY) {
+      providers.push(new DeepSeekProvider());
+    }
+  } catch (err) {
+    console.log('[AI Router] DeepSeek provider unavailable');
+  }
+  
+  try {
+    if (process.env.GEMINI_API_KEY) {
+      providers.push(new GeminiProvider());
+    }
+  } catch (err) {
+    console.log('[AI Router] Gemini provider unavailable');
+  }
+  
+  try {
+    if (process.env.OPENAI_API_KEY) {
+      providers.push(new OpenAIProvider());
+    }
+  } catch (err) {
+    console.log('[AI Router] OpenAI provider unavailable');
+  }
+  
+  // Always add MockProvider as final fallback for testing
+  providers.push(new MockProvider());
 
   console.log(`[AI Router] Starting fallback sequence for prompt: "${prompt.substring(0, 50)}..."`);
 
@@ -57,4 +82,6 @@ router.post("/", async (req, res) => {
           }
 });
 
+// Export both the router and the generateResponse function
+export { generateResponse };
 export default router;
