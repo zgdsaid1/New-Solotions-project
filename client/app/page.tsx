@@ -108,7 +108,7 @@ export default function HomePage() {
             transition={{ delay: 0.6 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
           >
-            {stats.map((stat, index) => (
+            {stats.map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-white mb-2">
                   {stat.value}

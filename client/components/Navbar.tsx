@@ -7,8 +7,7 @@ import {
   X, 
   Home, 
   User, 
-  CreditCard, 
-  Settings,
+  CreditCard,
   LogOut,
   Sparkles
 } from 'lucide-react'

@@ -84,7 +84,7 @@ Provide a concise, helpful response:`;
       };
 
       setMessages(prev => [...prev, aiMessage]);
-    } catch (err) {
+    } catch {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         text: "I'm experiencing technical difficulties. Please try again or contact support@aisolutionshub.co for immediate assistance.",

@@ -154,7 +154,7 @@ export default function DashboardPage() {
           <motion.div variants={itemVariants}>
             <h2 className="text-2xl font-bold text-white mb-6">Overview</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {stats.map((stat, index) => {
+              {stats.map((stat) => {
                 const Icon = stat.icon
                 return (
                   <Card key={stat.name} className="glass-panel border-white/10">
