@@ -48,7 +48,7 @@ app.get('/health', (_req, res) => {
 })
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI as string)
+mongoose.connect(process.env.MONGODB_URI as string)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
