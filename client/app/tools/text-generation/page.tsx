@@ -1,43 +1,62 @@
 "use client";
 
 import { useState } from "react";
+import { callTextGenerationApi } from "./api-call";
+import { TextArea } from "./components/TextArea";
+import { GenerateButton } from "./components/GenerateButton";
+import { ResponseDisplay } from "./components/ResponseDisplay";
 
 export default function TextGenerationPage() {
-      const [input, setInput] = useState("");
-        const [response, setResponse] = useState("");
+  const [input, setInput] = useState("");
+  const [response, setResponse] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-          async function handleGenerate() {
-                const res = await fetch("/api/ai", {
-                          method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                      body: JSON.stringify({ prompt: input })
-                });
-                    const data = await res.json();
-                        setResponse(data.output || "No response");
-          }
+  async function handleGenerate() {
+    if (!input.trim()) {
+      setError("Please enter a prompt");
+      return;
+    }
 
-            return (
-                    <div className="max-w-2xl mx-auto py-12">
-                          <h1 className="text-3xl font-bold mb-4">Text Generation</h1>
+    setLoading(true);
+    setError("");
+    setResponse("");
 
-                                <textarea
-                                        className="w-full p-3 rounded border bg-neutral-900"
-                                                rows={4}
-                                                        placeholder="Enter your prompt..."
-                                                                value={input}
-                                                                        onChange={(e) => setInput(e.target.value)}
-                                                                              />
+    try {
+      const result = await callTextGenerationApi({ prompt: input });
 
-                                                                                    <button
-                                                                                            onClick={handleGenerate}
-                                                                                                    className="mt-4 px-4 py-2 bg-purple-600 rounded hover:bg-purple-700"
-                                                                                                          >
-                                                                                                                  Generate
-                                                                                                                        </button>
+      if (result.error) {
+        setError(result.error);
+      } else {
+        setResponse(result.response || "No response received");
+      }
+    } catch (err) {
+      setError("Failed to generate text. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
-                                                                                                                              <div className="mt-6 p-4 rounded bg-neutral-800">
-                                                                                                                                      {response}
-                                                                                                                                            </div>
-                                                                                                                                                </div>
-            );
+  return (
+    <div className="max-w-2xl mx-auto py-12 px-4">
+      <h1 className="text-3xl font-bold mb-6 text-white">Text Generation</h1>
+
+      <div className="space-y-4">
+        <TextArea
+          value={input}
+          onChange={setInput}
+          placeholder="Enter your prompt..."
+          rows={4}
+        />
+
+        <GenerateButton
+          onClick={handleGenerate}
+          loading={loading}
+          disabled={!input.trim()}
+        />
+
+        <ResponseDisplay response={response} error={error} />
+      </div>
+    </div>
+  );
 }
