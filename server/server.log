@@ -1,0 +1,12 @@
+
+> server@1.0.0 dev
+> tsx watch src/index.ts
+
+9:45:29 AM [tsx] rerunning
+c🚀 Server running on port 4000
+📡 API available at http://0.0.0.0:4000
+💾 Using MongoDB for data storage
+🔑 OPENAI key detected: YES ✅
+🔑 GROQ key detected: YES ✅
+🔑 DEEPSEEK key detected: YES ✅
+✅ MongoDB Connected

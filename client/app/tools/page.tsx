@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { 
   FileText, 
   Image, 
@@ -31,15 +32,16 @@ const categories = [
 
 const tools = [
   {
-    name: 'AI Text Generator',
-    description: 'Generate high-quality content, articles, and copy using advanced language models',
+    name: 'HuBi AI Assistant',
+    description: 'Intelligent AI assistant to help with platform questions, pricing, features, and support',
     icon: FileText,
     color: 'from-blue-400 to-blue-600',
-    category: 'Text & Writing',
+    category: 'AI Assistants',
     rating: 4.8,
     uses: '1.2M',
     comingSoon: false,
     featured: true,
+    href: '/tools/hubi'
   },
   {
     name: 'Smart Image Analysis',
@@ -51,6 +53,7 @@ const tools = [
     uses: '856K',
     comingSoon: false,
     featured: true,
+    href: undefined
   },
   {
     name: 'Voice to Text',
@@ -61,6 +64,7 @@ const tools = [
     rating: 4.7,
     uses: '634K',
     comingSoon: true,
+    href: undefined,
     featured: false,
   },
   {
@@ -73,6 +77,7 @@ const tools = [
     uses: '445K',
     comingSoon: true,
     featured: false,
+    href: undefined
   },
   {
     name: 'AI Assistant',
@@ -84,6 +89,7 @@ const tools = [
     uses: '2.1M',
     comingSoon: true,
     featured: true,
+    href: undefined
   },
   {
     name: 'Content Optimizer',
@@ -95,6 +101,7 @@ const tools = [
     uses: '378K',
     comingSoon: true,
     featured: false,
+    href: undefined
   },
   {
     name: 'Image Generator',
@@ -106,6 +113,7 @@ const tools = [
     uses: '923K',
     comingSoon: true,
     featured: false,
+    href: undefined
   },
   {
     name: 'Code Assistant',
@@ -117,6 +125,7 @@ const tools = [
     uses: '567K',
     comingSoon: true,
     featured: false,
+    href: undefined
   },
 ]
 
@@ -240,14 +249,26 @@ export default function ToolsPage() {
                             {tool.category}
                           </span>
                         </div>
-                        <Button 
-                          variant="ghost" 
-                          className="w-full justify-between text-white/80 hover:text-white hover:bg-white/10"
-                          disabled={tool.comingSoon}
-                        >
-                          {tool.comingSoon ? 'Coming Soon' : 'Try Now'}
-                          {!tool.comingSoon && <ArrowRight className="w-4 h-4" />}
-                        </Button>
+                        {tool.href && !tool.comingSoon ? (
+                          <Link href={tool.href}>
+                            <Button 
+                              variant="ghost" 
+                              className="w-full justify-between text-white/80 hover:text-white hover:bg-white/10"
+                            >
+                              Try Now
+                              <ArrowRight className="w-4 h-4" />
+                            </Button>
+                          </Link>
+                        ) : (
+                          <Button 
+                            variant="ghost" 
+                            className="w-full justify-between text-white/80 hover:text-white hover:bg-white/10"
+                            disabled={tool.comingSoon}
+                          >
+                            {tool.comingSoon ? 'Coming Soon' : 'Try Now'}
+                            {!tool.comingSoon && <ArrowRight className="w-4 h-4" />}
+                          </Button>
+                        )}
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -295,14 +316,26 @@ export default function ToolsPage() {
                           </div>
                           <span>{tool.uses}</span>
                         </div>
-                        <Button 
-                          variant="ghost" 
-                          size="sm"
-                          className="w-full text-white/80 hover:text-white hover:bg-white/10"
-                          disabled={tool.comingSoon}
-                        >
-                          {tool.comingSoon ? 'Coming Soon' : 'Try Now'}
-                        </Button>
+                        {tool.href && !tool.comingSoon ? (
+                          <Link href={tool.href}>
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              className="w-full text-white/80 hover:text-white hover:bg-white/10"
+                            >
+                              Try Now
+                            </Button>
+                          </Link>
+                        ) : (
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            className="w-full text-white/80 hover:text-white hover:bg-white/10"
+                            disabled={tool.comingSoon}
+                          >
+                            {tool.comingSoon ? 'Coming Soon' : 'Try Now'}
+                          </Button>
+                        )}
                       </CardContent>
                     </Card>
                   </motion.div>
