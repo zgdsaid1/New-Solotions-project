@@ -13,7 +13,7 @@ export class MockProvider implements AIModelProvider {
     const lowerPrompt = prompt.toLowerCase();
     
     // Welcome/Hello messages
-    if (lowerPrompt.includes('hello') || lowerPrompt.includes('hi ')) {
+    if (lowerPrompt.includes('hello') || /\bhi\b/.test(lowerPrompt)) {
       return "Hello! I'm HuBi, your AI assistant for AI Solutions Hub. I'm here to help you learn about our platform, features, pricing, and more. What would you like to know?";
     }
     
