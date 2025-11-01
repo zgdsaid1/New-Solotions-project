@@ -88,15 +88,15 @@ export default function HomePage() {
             transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-6 justify-center mb-16"
           >
-            <Link href="/register">
+            <Link href="/tools/text-generation">
               <Button size="lg" className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-lg px-8 py-6">
-                Get Started Free
+                Try Text Generation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-            <Link href="/login">
+            <Link href="/register">
               <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 text-lg px-8 py-6">
-                Sign In
+                Get Started Free
               </Button>
             </Link>
           </motion.div>
@@ -195,15 +195,15 @@ export default function HomePage() {
                 their workflows and achieve unprecedented results.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-                <Link href="/register">
+                <Link href="/tools/text-generation">
                   <Button size="lg" className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-lg px-8 py-6">
-                    Start Free Trial
+                    Try AI Tools
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Link href="/login">
+                <Link href="/register">
                   <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 text-lg px-8 py-6">
-                    Contact Sales
+                    Get Started Free
                   </Button>
                 </Link>
               </div>
