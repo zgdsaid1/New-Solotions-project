@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Send, FileText, Copy, Download, RefreshCw, Languages, Globe } from "lucide-react";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { getBackendApiUrl } from "@/lib/utils";
 
 interface Message {
   id: string;
@@ -71,7 +72,8 @@ export default function TextGeneratorPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/ai", {
+      const backendUrl = getBackendApiUrl();
+      const response = await fetch(`${backendUrl}/api/ai`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: input }),
@@ -110,7 +112,8 @@ export default function TextGeneratorPage() {
       
       console.log('Sending translation request:', { prompt, targetLanguage }); // Debug
       
-      const response = await fetch("/api/ai", {
+      const backendUrl = getBackendApiUrl();
+      const response = await fetch(`${backendUrl}/api/ai`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
