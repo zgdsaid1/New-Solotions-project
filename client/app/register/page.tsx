@@ -49,13 +49,17 @@ export default function RegisterPage() {
   }
 
   const onSubmit = async (data: RegisterForm) => {
+    console.log('Form submitted with data:', data); // Debug log
     setIsLoading(true)
     setError('')
     
     try {
+      console.log('Calling registerUser function...'); // Debug log
       await registerUser(data.name, data.email, data.password)
+      console.log('Registration successful, redirecting to dashboard...'); // Debug log
       router.push('/dashboard')
     } catch (err: any) {
+      console.error('Registration failed:', err); // Debug log
       setError(err.response?.data?.message || 'Registration failed. Please try again.')
     } finally {
       setIsLoading(false)

@@ -10,7 +10,8 @@ import {
   CreditCard, 
   Settings,
   LogOut,
-  Sparkles
+  Sparkles,
+  Bot
 } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -33,12 +34,12 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href={isAuthenticated ? '/dashboard' : '/'} className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
+            <Link href="/tools/hubi" className="flex items-center space-x-2 group cursor-pointer">
+              <div className="relative w-10 h-10 bg-gradient-to-br from-purple-300/20 to-purple-600/30 rounded-xl flex items-center justify-center hover:scale-105 transition-transform duration-300 shadow-md shadow-purple-600/40 cursor-pointer">
+                <Bot className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-                AI Solutions Hub
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-300 group-hover:to-purple-500 transition-all duration-300 cursor-pointer">
+                HuBi
               </span>
             </Link>
           </div>

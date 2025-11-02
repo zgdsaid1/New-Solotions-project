@@ -67,13 +67,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const register = async (name: string, email: string, password: string) => {
     try {
+      console.log('Attempting to register user:', { name, email }); // Debug log
       const response = await authAPI.register({ name, email, password })
+      console.log('Registration response:', response.data); // Debug log
+      
       const { token: newToken, user: userData } = response.data
       
       localStorage.setItem('auth_token', newToken)
       setToken(newToken)
       setUser(userData)
+      
+      console.log('Registration successful, user set:', userData); // Debug log
     } catch (error) {
+      console.error('Registration error:', error); // Debug log
       throw error
     }
   }

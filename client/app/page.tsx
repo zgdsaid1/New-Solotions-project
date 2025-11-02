@@ -88,15 +88,15 @@ export default function HomePage() {
             transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-6 justify-center mb-16"
           >
-            <Link href="/tools/text-generation">
+            <Link href="/register">
               <Button size="lg" className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-lg px-8 py-6">
-                Try Text Generation
+                Get Started Free
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-            <Link href="/register">
+            <Link href="/login">
               <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 text-lg px-8 py-6">
-                Get Started Free
+                Sign In
               </Button>
             </Link>
           </motion.div>
@@ -195,15 +195,10 @@ export default function HomePage() {
                 their workflows and achieve unprecedented results.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-                <Link href="/tools/text-generation">
-                  <Button size="lg" className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-lg px-8 py-6">
-                    Try AI Tools
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
                 <Link href="/register">
-                  <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 text-lg px-8 py-6">
-                    Get Started Free
+                  <Button size="lg" className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-lg px-8 py-6">
+                    Start Free Trial
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
               </div>

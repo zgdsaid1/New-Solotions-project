@@ -13,7 +13,8 @@ import {
   Filter,
   ArrowRight,
   Star,
-  Clock
+  Clock,
+  Bot
 } from 'lucide-react'
 
 import ProtectedRoute from '@/components/ProtectedRoute'
@@ -32,9 +33,9 @@ const categories = [
 
 const tools = [
   {
-    name: 'HuBi AI Assistant',
-    description: 'Intelligent AI assistant to help with platform questions, pricing, features, and support',
-    icon: FileText,
+    name: 'Ask HuBi',
+    description: 'Chat with HuBi, your intelligent AI assistant for platform questions, pricing, and support',
+    icon: Bot,
     color: 'from-blue-400 to-blue-600',
     category: 'AI Assistants',
     rating: 4.8,
@@ -42,6 +43,18 @@ const tools = [
     comingSoon: false,
     featured: true,
     href: '/tools/hubi'
+  },
+  {
+    name: 'Text Generator',
+    description: 'Generate high-quality content with AI. Export to PDF/Word and copy easily.',
+    icon: FileText,
+    color: 'from-green-400 to-green-600',
+    category: 'Text & Writing',
+    rating: 4.9,
+    uses: '950K',
+    comingSoon: false,
+    featured: true,
+    href: '/tools/text-generator'
   },
   {
     name: 'Smart Image Analysis',

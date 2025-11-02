@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { callTextGenerationApi } from "./api-call";
 import { Send, Bot, User, HelpCircle, Mail } from "lucide-react";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 interface Message {
   id: string;
@@ -29,17 +30,22 @@ export default function HuBiAssistantPage() {
     // Welcome message
     const welcomeMessage: Message = {
       id: "welcome",
-      text: `Hello! I'm HuBi, your AI assistant for AI Solutions Hub. I'm here to help you with:
+      text: `Hey there! 👋 I'm HuBi, your friendly AI assistant!
 
-🔹 **Platform Information**: Learn about our comprehensive AI tools and services
-🔹 **Pricing Plans**: Starter ($9/month), Pro ($29/month), Business ($99/month), Enterprise (Custom)
-🔹 **Features**: AI Text Generation, Image Processing, Data Analytics, Custom AI Models
-🔹 **Support**: Technical assistance and guidance
-🔹 **Licensing**: Usage rights and commercial applications
+I'm here to help you with everything about our platform:
 
-For detailed support or licensing information, contact us at: **support@aisolutionshub.co**
+🤖 **What I can help with:**
+• Platform features and how to use them
+• Pricing plans (Starter $9, Pro $29, Business $99, Enterprise Custom)
+• Getting started guides
+• Technical support and troubleshooting
+• Feature explanations and best practices
 
-What can I help you with today?`,
+� **Pro tip:** Just ask me anything in natural language - I'm here to chat and help!
+
+📧 **Need human support?** Contact our team at: **support@aisolutionshub.co**
+
+What would you like to know about today? 😊`,
       isUser: false,
       timestamp: new Date(),
     };
@@ -62,17 +68,29 @@ What can I help you with today?`,
     setLoading(true);
 
     try {
-      const aiPrompt = `You are HuBi, an AI assistant for AI Solutions Hub platform. Respond professionally and helpfully to user questions about:
+      const aiPrompt = `You are HuBi, a friendly and helpful AI assistant for the AI Solutions Hub platform. You should respond in a conversational, warm, and professional tone.
 
-- Platform features and capabilities
-- Pricing: Starter ($9/month, 10K credits), Pro ($29/month, 50K credits), Business ($99/month, 200K credits), Enterprise (Custom pricing)
-- AI tools: Text Generation, Image Processing, Audio/Speech, Data Analytics, Custom Models
-- Support and licensing information
-- For detailed support/licensing, refer to: support@aisolutionshub.co
+Platform Details:
+- **Pricing Plans:**
+  • Starter ($9/month): 10,000 AI credits, basic tools, email support, 5 projects
+  • Pro ($29/month): 50,000 AI credits, all tools, priority support, analytics, unlimited projects, API access
+  • Business ($99/month): 200,000 AI credits, team management, advanced security, custom models, SLA guarantee
+  • Enterprise (Custom): Unlimited credits, 24/7 support, custom deployment, dedicated account manager
 
-User question: "${input}"
+- **Features:** AI Text Generation, Image Analysis, Voice-to-Text, Data Analytics, Custom AI Models, Content Optimization
+- **Support:** Technical assistance, onboarding, best practices guidance
+- **API Access:** Available for Pro+ plans for custom integrations
 
-Provide a concise, helpful response:`;
+Guidelines:
+- Be conversational and friendly
+- Use emojis sparingly but effectively
+- Provide specific, helpful information
+- If asked about technical issues or complex licensing, direct to: support@aisolutionshub.co
+- Always try to be helpful and solution-oriented
+
+User's question: "${input}"
+
+Respond naturally and helpfully:`;
 
       const result = await callTextGenerationApi({ prompt: aiPrompt });
 
@@ -98,25 +116,29 @@ Provide a concise, helpful response:`;
   };
 
   const suggestedQuestions = [
-    "What AI tools do you offer?",
-    "Tell me about your pricing plans",
-    "How do I get started?",
-    "What's included in the Pro plan?",
+    "What's the difference between your pricing plans?",
+    "How do I get started with your AI tools?",
+    "Can you tell me about your platform features?",
+    "What kind of support do you offer?",
+    "Do you have an API for developers?",
+    "How does the Pro plan work?"
   ];
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4 h-screen flex flex-col">
+    <ProtectedRoute>
+      <div className="max-w-4xl mx-auto py-8 px-4 h-screen flex flex-col">
       {/* Header */}
       <div className="text-center mb-6">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-            <Bot className="w-6 h-6 text-white" />
+          <div>
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+              AI Assistant
+            </h1>
           </div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-            HuBi AI Assistant
-          </h1>
         </div>
-        <p className="text-gray-400 text-lg">Your intelligent guide to AI Solutions Hub</p>
+        <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          💬 Chat with your intelligent AI assistant about anything related to our platform, pricing, or get help with your questions!
+        </p>
       </div>
 
       {/* Chat Container */}
@@ -178,21 +200,27 @@ Provide a concise, helpful response:`;
 
         {/* Suggested Questions */}
         {messages.length === 1 && (
-          <div className="p-4 border-t border-gray-700">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-gray-400">Suggested questions:</span>
+          <div className="p-4 border-t border-gray-700 bg-gray-900/30">
+            <div className="flex items-center gap-2 mb-4">
+              <HelpCircle className="w-5 h-5 text-blue-400" />
+              <span className="text-sm font-medium text-blue-400">💡 Quick questions to get you started:</span>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {suggestedQuestions.map((question, index) => (
                 <button
                   key={index}
                   onClick={() => setInput(question)}
-                  className="text-xs px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-full border border-gray-600 transition-colors"
+                  className="text-sm px-4 py-3 bg-gradient-to-r from-gray-800 to-gray-700 hover:from-blue-900/20 hover:to-purple-900/20 text-gray-300 hover:text-white rounded-lg border border-gray-600 hover:border-blue-500/50 transition-all duration-300 text-left hover:shadow-lg hover:scale-105"
                 >
+                  <span className="text-blue-400 mr-2">•</span>
                   {question}
                 </button>
               ))}
+            </div>
+            <div className="mt-4 text-center">
+              <p className="text-xs text-gray-500">
+                Or type your own question below! 👇
+              </p>
             </div>
           </div>
         )}
@@ -229,6 +257,7 @@ Provide a concise, helpful response:`;
           </a>
         </div>
       </div>
-    </div>
+      </div>
+    </ProtectedRoute>
   );
 }

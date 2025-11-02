@@ -59,6 +59,7 @@ const tools = [
     icon: FileText,
     color: 'from-blue-400 to-blue-600',
     comingSoon: false,
+    href: '/tools/text-generator',
   },
   {
     name: 'Image Analysis',
@@ -66,6 +67,7 @@ const tools = [
     icon: Image,
     color: 'from-purple-400 to-purple-600',
     comingSoon: false,
+    href: '/tools',
   },
   {
     name: 'Speech Processing',
@@ -73,6 +75,7 @@ const tools = [
     icon: Mic,
     color: 'from-green-400 to-green-600',
     comingSoon: true,
+    href: undefined,
   },
   {
     name: 'Data Analytics',
@@ -80,6 +83,7 @@ const tools = [
     icon: BarChart3,
     color: 'from-orange-400 to-orange-600',
     comingSoon: true,
+    href: undefined,
   },
   {
     name: 'Smart Assistant',
@@ -87,6 +91,7 @@ const tools = [
     icon: Brain,
     color: 'from-pink-400 to-pink-600',
     comingSoon: true,
+    href: undefined,
   },
   {
     name: 'Custom Models',
@@ -94,6 +99,7 @@ const tools = [
     icon: Sparkles,
     color: 'from-indigo-400 to-indigo-600',
     comingSoon: true,
+    href: undefined,
   },
 ]
 
@@ -196,42 +202,78 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {tools.map((tool, index) => {
                 const Icon = tool.icon
+                
                 return (
                   <motion.div
                     key={tool.name}
                     variants={itemVariants}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Card className="glass-panel border-white/10 hover:bg-white/5 transition-all duration-300 group cursor-pointer">
-                      <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <div className={`w-12 h-12 bg-gradient-to-br ${tool.color} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                            <Icon className="w-6 h-6 text-white" />
+                    {tool.href && !tool.comingSoon ? (
+                      <Link href={tool.href}>
+                        <Card className="glass-panel border-white/10 hover:bg-white/5 transition-all duration-300 group cursor-pointer">
+                          <CardHeader>
+                            <div className="flex items-center justify-between">
+                              <div className={`w-12 h-12 bg-gradient-to-br ${tool.color} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                                <Icon className="w-6 h-6 text-white" />
+                              </div>
+                              {tool.comingSoon && (
+                                <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded-full">
+                                  Coming Soon
+                                </span>
+                              )}
+                            </div>
+                            <CardTitle className="text-white group-hover:text-blue-400 transition-colors">
+                              {tool.name}
+                            </CardTitle>
+                            <CardDescription className="text-white/60">
+                              {tool.description}
+                            </CardDescription>
+                          </CardHeader>
+                          <CardContent>
+                            <Button 
+                              variant="ghost" 
+                              className="w-full justify-start text-white/80 hover:text-white hover:bg-white/10"
+                              disabled={tool.comingSoon}
+                            >
+                              {tool.comingSoon ? 'Coming Soon' : 'Get Started'}
+                              {!tool.comingSoon && <ArrowRight className="ml-2 h-4 w-4" />}
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ) : (
+                      <Card className="glass-panel border-white/10 hover:bg-white/5 transition-all duration-300 group cursor-pointer">
+                        <CardHeader>
+                          <div className="flex items-center justify-between">
+                            <div className={`w-12 h-12 bg-gradient-to-br ${tool.color} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                              <Icon className="w-6 h-6 text-white" />
+                            </div>
+                            {tool.comingSoon && (
+                              <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded-full">
+                                Coming Soon
+                              </span>
+                            )}
                           </div>
-                          {tool.comingSoon && (
-                            <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded-full">
-                              Coming Soon
-                            </span>
-                          )}
-                        </div>
-                        <CardTitle className="text-white group-hover:text-blue-400 transition-colors">
-                          {tool.name}
-                        </CardTitle>
-                        <CardDescription className="text-white/60">
-                          {tool.description}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <Button 
-                          variant="ghost" 
-                          className="w-full justify-start text-white/80 hover:text-white hover:bg-white/10"
-                          disabled={tool.comingSoon}
-                        >
-                          {tool.comingSoon ? 'Coming Soon' : 'Get Started'}
-                          {!tool.comingSoon && <ArrowRight className="ml-2 h-4 w-4" />}
-                        </Button>
-                      </CardContent>
-                    </Card>
+                          <CardTitle className="text-white group-hover:text-blue-400 transition-colors">
+                            {tool.name}
+                          </CardTitle>
+                          <CardDescription className="text-white/60">
+                            {tool.description}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <Button 
+                            variant="ghost" 
+                            className="w-full justify-start text-white/80 hover:text-white hover:bg-white/10"
+                            disabled={tool.comingSoon}
+                          >
+                            {tool.comingSoon ? 'Coming Soon' : 'Get Started'}
+                            {!tool.comingSoon && <ArrowRight className="ml-2 h-4 w-4" />}
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    )}
                   </motion.div>
                 )
               })}
